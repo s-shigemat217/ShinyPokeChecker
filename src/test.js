@@ -32,36 +32,13 @@ async function fetchAllPokemon() {
     return [];
   }
 }
-// URLからポケモンIDを抽出する関数
-function extractIdFromUrl(url) {
-  // 例: https://pokeapi.co/api/v2/pokemon/25/ -> "25"
-  return url.split("/").filter(Boolean).pop();
-}
-// ポケモンIDからスプライト画像のURLを生成する関数
-function spriteUrlById(id) {
-  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
-}
 
 function renderPokemonList(pokemonList) {
   listEl.innerHTML = "";
 
   for (const pokemon of pokemonList) {
-    const id = extractIdFromUrl(pokemon.url);
-
     const li = document.createElement("li");
-    li.className = "pokemon-item";
-    const img = document.createElement("img");
-    img.src = spriteUrlById(id);
-    img.alt = pokemon.name;
-    img.width = 120;
-    img.height = 120;
-    img.loading = "lazy"; // 画像が多いので必須級
-
-    const name = document.createElement("span");
-    name.textContent = pokemon.name;
-
-    li.appendChild(img);
-    li.appendChild(name);
+    li.textContent = pokemon.name;
     listEl.appendChild(li);
   }
 
