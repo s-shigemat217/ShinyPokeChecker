@@ -3,6 +3,8 @@
 PokeAPIを利用して、ポケモンの一覧を取得・表示するWebアプリです。
 タイプ別フィルタや捕獲管理機能を実装し、捕獲済みのポケモンは色違い画像で表示されます。
 
+![Pokémon List App Screenshot](./docs/screenshot.png)
+
 ## Features
 - ポケモン全種一覧の取得・表示（pokemon-species）
 - タイプ別フィルタリング
