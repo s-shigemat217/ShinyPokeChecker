@@ -99,6 +99,8 @@ button:focus-visible {
 #pokemon-list {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 20px;
   flex-wrap: wrap;
   list-style: none;
   padding: 0;
@@ -113,6 +115,10 @@ button:focus-visible {
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  background-color: #2a2a2a;
-  color: #fff;
+  background-color: #eee;
+  color: #333;
+}
+
+.pokemon-item img {
+  image-rendering: pixelated;
 }

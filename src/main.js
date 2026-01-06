@@ -9,19 +9,21 @@ const api = axios.create({
 const statusEl = document.getElementById("status");
 const listEl = document.getElementById("pokemon-list");
 
+const sentinelEl = document.getElementById("sentinel");
+
 // 全ポケモンを取得する関数
 async function fetchAllPokemon() {
   try {
     statusEl.textContent = "Loading Pokémon...";
 
     // ① まず件数を取得
-    const firstRes = await api.get("/pokemon", {
+    const firstRes = await api.get("/pokemon-species", {
       params: { limit: 1, offset: 0 },
     });
     const count = firstRes.data.count;
 
     // ② 全件取得
-    const res = await api.get("/pokemon", {
+    const res = await api.get("/pokemon-species", {
       params: { limit: count, offset: 0 },
     });
 
@@ -34,7 +36,6 @@ async function fetchAllPokemon() {
 }
 // URLからポケモンIDを抽出する関数
 function extractIdFromUrl(url) {
-  // 例: https://pokeapi.co/api/v2/pokemon/25/ -> "25"
   return url.split("/").filter(Boolean).pop();
 }
 // ポケモンIDからスプライト画像のURLを生成する関数
@@ -55,11 +56,12 @@ function renderPokemonList(pokemonList) {
     img.alt = pokemon.name;
     img.width = 120;
     img.height = 120;
-    img.loading = "lazy"; // 画像が多いので必須級
+    img.loading = "lazy";
 
     const name = document.createElement("span");
     name.textContent = pokemon.name;
 
+    li.appendChild(document.createTextNode(`${id} `));
     li.appendChild(img);
     li.appendChild(name);
     listEl.appendChild(li);
