@@ -2,38 +2,41 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/src/image/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Shiny Pokemon Checker</title>
   </head>
   <body>
   <div id="app">
     <h1>Pokémon List</h1>
-    <label for="type-select">Type:</label>
-    <select id="type-select">
-      <option value="all">すべて</option>
-      <option value="normal">ノーマル</option>
-      <option value="fire">炎</option>
-      <option value="water">水</option>
-      <option value="electric">電気</option>
-      <option value="grass">草</option>
-      <option value="ice">氷</option>
-      <option value="fighting">格闘</option>
-      <option value="poison">毒</option>
-      <option value="ground">地面</option>
-      <option value="flying">飛行</option>
-      <option value="psychic">エスパー</option>
-      <option value="bug">虫</option>
-      <option value="rock">岩</option>
-      <option value="ghost">ゴースト</option>
-      <option value="dragon">ドラゴン</option>
-      <option value="dark">悪</option>
-      <option value="steel">鋼</option>
-      <option value="fairy">フェアリー</option>
-    </select>
-    <p id="status">Loading...</p>
+    <div class="flex-wrap">
+      <p class="fillter">
+        <label for="type-select">Type:</label>
+        <select id="type-select">
+          <option value="all">All</option>
+          <option value="normal">Normal</option>
+          <option value="fire">Fire</option>
+          <option value="water">Water</option>
+          <option value="electric">Electric</option>
+          <option value="grass">Grass</option>
+          <option value="ice">Ice</option>
+          <option value="fighting">Fighting</option>
+          <option value="poison">Poison</option>
+          <option value="ground">Ground</option>
+          <option value="flying">Flying</option>
+          <option value="psychic">Psychic</option>
+          <option value="bug">Bug</option>
+          <option value="rock">Rock</option>
+          <option value="ghost">Ghost</option>
+          <option value="dragon">Dragon</option>
+          <option value="dark">Dark</option>
+          <option value="steel">Steel</option>
+          <option value="fairy">Fairy</option>
+        </select>
+      </p>
+      <p id="status">Loading...</p>
+    </div>
     <ul id="pokemon-list"></ul>
-    <div id="sentinel" style="height: 1px;"></div>
   </div>
     <script type="module" src="/src/script/main.js"></script>
   </body>

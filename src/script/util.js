@@ -6,3 +6,7 @@ export function extractIdFromUrl(url) {
 export function spriteUrlById(id) {
   return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
 }
+// ポケモンIDからスプライト画像のURLを生成する関数
+export function shinySpriteUrlById(id) {
+  return `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${id}.png`;
+}

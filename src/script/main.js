@@ -2,37 +2,72 @@
 import "../style/style.css";
 import { fetchAllSpecies, fetchPokemonNameSetByType } from "./api.js";
 import { renderPokemonList, setStatus } from "./render.js";
+import { loadCaughtSet, saveCaughtSet, toggleCaught } from "./storage.js";
 
+let caughtSet = loadCaughtSet();
 let allSpecies = [];
+let currentList = [];
+
+const state = {
+  allSpecies: [],
+  currentList: [],
+  caughtSet: loadCaughtSet(),
+
+  // フィルタ状態
+  type: "all",
+  // search: "",
+  // generation: "all",
+  // caughtOnly: false,
+};
+
+const typeNameSetCache = new Map();
 
 // タイプ変更時の処理
 async function onTypeChange(typeName) {
-  // console.log("onTypeChange:", typeName);
   try {
     if (typeName === "all") {
-      renderPokemonList(allSpecies);
+      currentList = allSpecies;
+      renderPokemonList(allSpecies, caughtSet);
       setStatus(`All: ${allSpecies.length}`);
       return;
     }
     setStatus(`Loading type: ${typeName}...`);
     const nameSet = await fetchPokemonNameSetByType(typeName);
 
-    // species一覧（name）を、typeのpokemon名セットで絞る
-    const filtered = allSpecies.filter((s) => nameSet.has(s.name));
-    renderPokemonList(filtered);
-    setStatus(`${typeName}: ${filtered.length}`);
+    currentList = allSpecies.filter((s) => nameSet.has(s.name));
+    renderPokemonList(currentList, caughtSet);
+    setStatus(`${typeName}: ${currentList.length}`);
   } catch (error) {
     console.error(error);
     setStatus(`Failed to load type: ${typeName}`);
   }
 }
 
+// 捕獲状態のトグルボタンの設定
+function setupCaughtToggle() {
+  const listEl = document.getElementById("pokemon-list");
+
+  listEl.addEventListener("click", (e) => {
+    const btn = e.target.closest('button[data-action="toggle-caught"]');
+    if (!btn) return;
+
+    const id = btn.dataset.id;
+    toggleCaught(caughtSet, id);
+    saveCaughtSet(caughtSet);
+    renderPokemonList(currentList, caughtSet);
+  });
+}
+
 // 初期化関数
 async function init() {
+
   try {
     setStatus("Loading Pokémon species...");
     allSpecies = await fetchAllSpecies();
-    renderPokemonList(allSpecies);
+    currentList = allSpecies;
+
+    renderPokemonList(currentList, caughtSet);
+
     setStatus(`All: ${allSpecies.length}`);
 
     // タイプ選択の変更イベントリスナー
@@ -41,6 +76,9 @@ async function init() {
       const selectedType = event.target.value;
       onTypeChange(selectedType);
     });
+
+    // 捕獲状態トグルのセットアップ
+    setupCaughtToggle();
 
   } catch (error) {
     console.error(error);
